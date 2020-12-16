@@ -13,6 +13,7 @@
     <input  class="toggle-all"
             type="checkbox"
             name="toggleAll"
+            (click)="completedAll()"
     />
     <ul class="todo-list">
       <li *ngFor="let item of filterItems()">
@@ -33,7 +34,7 @@
         <a class="filterCompleted" (click)="filter = 'completed'">Complétés</a>
       </li>
     </ul>
-    <button class="clear-completed" (click)="clearCompleted()">Supprimer cochées</button>
+    <button *ngIf="hasCompleted()" class="clear-completed" (click)="clearCompleted()">Supprimer cochées</button>
   </footer>
 </section>
 <hr/>

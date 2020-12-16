@@ -4,9 +4,8 @@
           name			= "fait"
           [ngModel] = "data.isDone"
           (ngModelChange) = "itemDone($event)"
-
   />
-  <label 	class="texte" (click)="itemTest($event)">{{label}}</label>
+  <label 	class="texte" (dblclick)="itemTest($event)">{{label}}</label>
   <button class="destroy" (click)="removeItem()"></button>
 </div>
 <form (submit)="itemLabel(newTextInput.value)">

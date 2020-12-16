@@ -13,6 +13,7 @@ export class TodoListComponent implements OnInit {
     private todoList: TodoListData;
     //private sauvItems: TodoItemData[];
     private filter: string;
+    private allCompleted : boolean;
 
     constructor(private todoService: TodoService) {
         todoService.getTodoListDataObservable().subscribe(tdl => this.todoList = tdl);
@@ -22,7 +23,9 @@ export class TodoListComponent implements OnInit {
       if (localStorage.getItem("todolist") !== null) {
         this.todoList.items = JSON.parse(localStorage.getItem("todolist"));
       }
+
       this.filter = 'all';
+      this.allCompleted = false;
     }
 
     get label(): string {
@@ -36,8 +39,6 @@ export class TodoListComponent implements OnInit {
     get nbUncheckedItems(): number {
         let count = 0;
         let l = this.todoList.items;
-        console.log(l);
-
         l.forEach(element => {
           if (!element.isDone) {
               count++;
@@ -47,8 +48,6 @@ export class TodoListComponent implements OnInit {
     }
 
     filterItems(){
-      console.log(this.filter);
-
       if (this.filter == "actives") {
         return this.items.filter(item => !item.isDone );
       }
@@ -60,23 +59,21 @@ export class TodoListComponent implements OnInit {
       }
     }
 
+    hasCompleted(){
+      let bool = false;
+      this.items.forEach(item => {
+        if (item.isDone) {
+            bool = true;
+        }
+      });
+      return bool;
+    }
+
     appendItem(label: string) {
       this.todoService.appendItems({
         label,
         isDone:false
       });
-    }
-
-    itemDone(item: TodoItemData, done:boolean) {
-      this.todoService.setItemsDone(done, item);
-    }
-
-    itemLabel(item: TodoItemData, label: string) {
-      this.todoService.setItemsLabel(label, item);
-    }
-
-    removeItem(item: TodoItemData) {
-      this.todoService.removeItems(item);
     }
 
     clearCompleted() {
@@ -85,5 +82,17 @@ export class TodoListComponent implements OnInit {
           this.removeItem(element);
         }
       });
+    }
+
+    completedAll(){
+      this.items.forEach(item => {
+        if (this.allCompleted) {
+          this.todoService.setItemsDone(false, item);
+        }
+        else {
+          this.todoService.setItemsDone(true, item);
+        }
+      });
+      this.allCompleted = (this.allCompleted) ? false : true;
     }
 }

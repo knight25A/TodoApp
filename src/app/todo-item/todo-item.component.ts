@@ -21,16 +21,14 @@ export class TodoItemComponent implements OnInit {
   }
 
   itemTest() {
-    /*let el = document.getElementsByClassName('edit');
-    if (el.length !== 0) {
-      el[0].style.display = "block";
-    }*/
-
+    console.log("dbclick");
+    
 
   }
 
   itemDone(done:boolean) {
     this.todoService.setItemsDone(done, this.data);
+
   }
 
   itemLabel(label: string) {
