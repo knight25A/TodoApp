@@ -10,10 +10,11 @@
     </form>
   </header>
   <section class="main">
-    <input  class="toggle-all"
-            type="checkbox"
-            name="toggleAll"
-            (click)="completedAll()"
+    <input  *ngIf   = "todoList.items.length != 0"
+            class   = "toggle-all"
+            type    = "checkbox"
+            name    = "toggleAll"
+            (click) = "completedAll()"
     />
     <ul class="todo-list">
       <li *ngFor="let item of filterItems()">
@@ -21,7 +22,7 @@
       </li>
     </ul>
   </section>
-  <footer class="footer">
+  <section *ngIf="todoList.items.length != 0" class="footer">
     <span class="todo-count"><strong>{{nbUncheckedItems}}</strong> restantes </span>
     <ul class="filters">
       <li>
@@ -34,10 +35,15 @@
         <a class="filterCompleted" (click)="filter = 'completed'">Complétés</a>
       </li>
     </ul>
-    <button *ngIf="hasCompleted()" class="clear-completed" (click)="clearCompleted()">Supprimer cochées</button>
-  </footer>
+    <button *ngIf="todoList.items.length != 0" class="clear" (click)="clearAll()">Reset</button>
+    <button *ngIf="hasCompleted()" class="clear" (click)="clearCompleted()">Supprimer cochées</button>
+  </section>
 </section>
-<hr/>
+<footer class="info">
+  <p *ngIf="todoList.items.length != 0; else noItem">Double-cliquez pour éditer un item</p>
+  <ng-template #noItem><p>Votre liste est vide !</p></ng-template>
+</footer>
+
 
 <!--V5 debug : suppression item-->
 <!--<h2>Debug V5</h2>
