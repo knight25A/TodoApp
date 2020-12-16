@@ -15,7 +15,7 @@
             name="toggleAll"
     />
     <ul class="todo-list">
-      <li *ngFor="let item of items">
+      <li *ngFor="let item of filterItems()">
         <app-todo-item [data]="item"></app-todo-item>
       </li>
     </ul>
@@ -24,13 +24,13 @@
     <span class="todo-count"><strong>{{nbUncheckedItems}}</strong> restantes</span>
     <ul class="filters">
       <li>
-        <a class="filterAll">Tous</a>
+        <a class="filterAll" (click)="filter = 'all'">Tous</a>
       </li>
       <li>
-        <a class="filterActives" (click)="filterActives()">Actifs</a>
+        <a class="filterActives" (click)="filter = 'actives'">Actifs</a>
       </li>
       <li>
-        <a class="filterCompleted" (click)="filterCompleted()">Complétés</a>
+        <a class="filterCompleted" (click)="filter = 'completed'">Complétés</a>
       </li>
     </ul>
     <button class="clear-completed" (click)="clearCompleted()">Supprimer cochées</button>
@@ -39,7 +39,7 @@
 <hr/>
 
 <!--V5 debug : suppression item-->
-<h2>Debug V5</h2>
+<!--<h2>Debug V5</h2>
 <ul>
   <li *ngFor="let item of items">
     <input type="checkbox" [ngModel]="item.isDone" (ngModelChange)="itemDone(item, $event)"/>
@@ -49,4 +49,4 @@
     </form>
     <button (click)="removeItem(item)">Remove</button>
   </li>
-</ul>
+</ul>-->

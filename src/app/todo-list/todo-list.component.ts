@@ -11,14 +11,15 @@ import {TodoService} from '../todo.service';
 export class TodoListComponent implements OnInit {
 
     private todoList: TodoListData;
-    private sauvItems: TodoItemData[];
-
+    //private sauvItems: TodoItemData[];
+    private filter: string;
 
     constructor(private todoService: TodoService) {
         todoService.getTodoListDataObservable().subscribe( tdl => this.todoList = tdl );
     }
 
     ngOnInit() {
+      this.filter = 'all';
     }
 
     get label(): string {
@@ -42,30 +43,23 @@ export class TodoListComponent implements OnInit {
         return count;
     }
 
-    filterActives() {
-      if (this.sauvItems) {
-        this.todoList.items = this.sauvItems;
-      }
-      console.log(this.todoList.items);
+    filterItems(){
+      console.log(this.filter);
 
-      let test = this.items.filter(item => !item.isDone );
-      console.log(test);
-      this.sauvItems = this.items;
-      this.todoList.items = test;
-    }
-
-    filterCompleted() {
-      if (this.sauvItems) {
-        this.todoList.items = this.sauvItems;
+      if (this.filter == "actives") {
+        return this.items.filter(item => !item.isDone );
       }
-      console.log(this.items);
-      let test = this.items.filter(item => item.isDone);
-      console.log(test);
-      this.sauvItems = this.items;
-      this.todoList.items = test;
+      if (this.filter == "completed") {
+        return this.items.filter(item => item.isDone);
+      }
+      if (this.filter == "all") {
+        return this.todoList.items;
+      }
     }
 
     appendItem(label: string) {
+      console.log("here");
+
       this.todoService.appendItems({
         label,
         isDone:false
