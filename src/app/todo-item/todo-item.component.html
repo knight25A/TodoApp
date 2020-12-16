@@ -1,16 +1,19 @@
-<div class="view">
+<div *ngIf="this.editing == false; else edition" class="view">
   <input 	class			= "toggle"
           type			= "checkbox"
           name			= "fait"
           [ngModel] = "data.isDone"
           (ngModelChange) = "itemDone($event)"
   />
-  <label 	class="texte" (dblclick)="itemTest($event)">{{label}}</label>
+  <label 	class="texte" (dblclick)="itemEdition()">{{label}}</label>
   <button class="destroy" (click)="removeItem()"></button>
 </div>
-<form (submit)="itemLabel(newTextInput.value)">
-  <input  #newTextInput
-          name    = "newTextInput"
-          class   = "edit"
-          [ngModel] = "data.label"/>
-</form>
+<ng-template #edition>
+  <form  (submit)="itemLabel(newTextInput.value)">
+    <input  #newTextInput
+            name    = "newTextInput"
+            class   = "edit"
+            type    = "text"
+            [ngModel] = "data.label"/>
+  </form>
+</ng-template>

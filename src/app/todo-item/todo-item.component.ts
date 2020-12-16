@@ -10,21 +10,22 @@ import { TodoItemData } from "../dataTypes/TodoItemData";
 })
 export class TodoItemComponent implements OnInit {
   @Input() private data: TodoItemData;
+  private editing: boolean;
 
-  constructor(private todoService: TodoService) { }
+  constructor(private todoService: TodoService) {}
 
   ngOnInit() {
+    this.editing = false;
   }
 
   get label(): string {
     return this.data.label;
   }
 
-  itemTest() {
-    console.log("dbclick");
-    
-
+  itemEdition() {
+    this.editing = true;
   }
+
 
   itemDone(done:boolean) {
     this.todoService.setItemsDone(done, this.data);
@@ -32,7 +33,12 @@ export class TodoItemComponent implements OnInit {
   }
 
   itemLabel(label: string) {
-    this.todoService.setItemsLabel(label, this.data);
+    if (label) {
+      this.todoService.setItemsLabel(label, this.data);
+    }
+    else {
+      this.todoService.removeItems(this.data);
+    }
   }
 
   removeItem() {

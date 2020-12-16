@@ -77,14 +77,14 @@ export class TodoListComponent implements OnInit {
     }
 
     clearCompleted() {
-      this.items.forEach(element => {
-        if (element.isDone) {
-          this.removeItem(element);
+      this.items.forEach(item => {
+        if (item.isDone) {
+          this.todoService.removeItems(item);
         }
       });
     }
 
-    completedAll(){
+    completedAll() {
       this.items.forEach(item => {
         if (this.allCompleted) {
           this.todoService.setItemsDone(false, item);
