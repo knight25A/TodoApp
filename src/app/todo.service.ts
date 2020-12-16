@@ -28,6 +28,7 @@ export class TodoService {
       label: tdl.label,
       items: tdl.items.map( I => items.indexOf(I) === -1 ? I : ({label: I.label, isDone}) )
     });
+    localStorage.setItem("todolist", JSON.stringify(this.todoListSubject._value.items));
   }
 
   appendItems( ...items: TodoItemData[] ) {
@@ -36,6 +37,7 @@ export class TodoService {
       label: tdl.label, // ou on peut écrire: ...tdl,
       items: [...tdl.items, ...items]
     });
+    localStorage.setItem("todolist", JSON.stringify(this.todoListSubject._value.items));
   }
 
   removeItems( ...items: TodoItemData[] ) {
@@ -44,6 +46,7 @@ export class TodoService {
       label: tdl.label, // ou on peut écrire: ...tdl,
       items: tdl.items.filter( I => items.indexOf(I) === -1 )
     });
+    localStorage.setItem("todolist", JSON.stringify(this.todoListSubject._value.items));
   }
 
 }

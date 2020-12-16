@@ -15,10 +15,13 @@ export class TodoListComponent implements OnInit {
     private filter: string;
 
     constructor(private todoService: TodoService) {
-        todoService.getTodoListDataObservable().subscribe( tdl => this.todoList = tdl );
+        todoService.getTodoListDataObservable().subscribe(tdl => this.todoList = tdl);
     }
 
     ngOnInit() {
+      if (localStorage.getItem("todolist") !== null) {
+        this.todoList.items = JSON.parse(localStorage.getItem("todolist"));
+      }
       this.filter = 'all';
     }
 
@@ -58,8 +61,6 @@ export class TodoListComponent implements OnInit {
     }
 
     appendItem(label: string) {
-      console.log("here");
-
       this.todoService.appendItems({
         label,
         isDone:false
