@@ -11,15 +11,29 @@ import { TodoItemData } from "../dataTypes/TodoItemData";
 export class TodoItemComponent implements OnInit {
   @Input() private data: TodoItemData;
   private editing: boolean;
+  private expired: boolean;
 
   constructor(private todoService: TodoService) {}
 
   ngOnInit() {
     this.editing = false;
+    if (new Date(this.data.dateLimit) < new Date()) {
+      console.log("expired");
+
+      this.expired = true;
+    }
+    else {
+      this.expired = false;
+    }
   }
 
   get label(): string {
     return this.data.label;
+  }
+
+  get dateLimit(): string {
+    var d = new Date(this.data.dateLimit);
+    return d.getDate()+"/"+(d.getMonth()+1)+"/"+d.getFullYear();
   }
 
   itemEdition() {

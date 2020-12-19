@@ -11,17 +11,20 @@ import {TodoService} from '../todo.service';
 export class TodoListComponent implements OnInit {
 
     private todoList: TodoListData;
-    //private sauvItems: TodoItemData[];
     private filter: string;
-    private allCompleted : boolean;
+    private allCompleted: boolean;
 
     constructor(private todoService: TodoService) {
+        console.log("construct");
+
         todoService.getTodoListDataObservable().subscribe(tdl => this.todoList = tdl);
     }
 
     ngOnInit() {
-      if (localStorage.getItem("todolist") !== null) {
-        this.todoList.items = JSON.parse(localStorage.getItem("todolist"));
+      console.log(this.todoList.label);
+
+      if (localStorage.getItem(this.todoList.label) !== null) {
+        this.todoList.items = JSON.parse(localStorage.getItem(this.todoList.label));
       }
 
       this.filter = 'all';
@@ -69,11 +72,22 @@ export class TodoListComponent implements OnInit {
       return bool;
     }
 
-    appendItem(label: string) {
-      this.todoService.appendItems({
-        label,
-        isDone:false
-      });
+    appendItem(label: string, date: string) {
+      if (date != "") {
+        this.todoService.appendItems({
+          label,
+          dateLimit: date,
+          isDone:false
+        });
+      }
+      else {
+        this.todoService.appendItems({
+          label,
+          dateLimit: null,
+          isDone:false
+        });
+      }
+
     }
 
     clearCompleted() {

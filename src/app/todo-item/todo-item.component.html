@@ -1,11 +1,12 @@
-<div *ngIf="this.editing == false; else edition" class="view">
+<div *ngIf="this.editing == false; else edition"[ngClass]="(this.expired)?'view-expired':'view'">
   <input 	class			= "toggle"
           type			= "checkbox"
           name			= "fait"
           [ngModel] = "data.isDone"
           (ngModelChange) = "itemDone($event)"
   />
-  <label 	class="texte" (dblclick)="itemEdition()">{{label}}</label>
+  <label	(dblclick)="itemEdition()">{{label}}</label>
+  <label  class="date">{{dateLimit}}</label>
   <button class="destroy" (click)="removeItem()"></button>
 </div>
 <ng-template #edition>

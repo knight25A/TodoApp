@@ -27,8 +27,7 @@ body {
   line-height: 1.4em;
   background: #f5f5f5;
   color: #4d4d4d;
-  min-width: 230px;
-  max-width: 600px;
+  width: 50%;
   margin: 0 auto;
   -webkit-font-smoothing: antialiased;
   -moz-font-smoothing: antialiased;
@@ -47,7 +46,7 @@ input[type="checkbox"] {
 
 .todoapp {
   background: #fff;
-  margin: 130px 0 40px 0;
+  margin: 0px 0 40px 0;
   position: relative;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2),
   0 25px 50px 0 rgba(0, 0, 0, 0.1);
@@ -73,16 +72,65 @@ input[type="checkbox"] {
 
 .todoapp h1 {
   position: absolute;
-  top: -155px;
+  top: -185px;
   width: 100%;
-  font-size: 100px;
+  font-size: 80px;
   font-weight: 100;
   text-align: center;
   color: rgba(175, 47, 47, 0.15);
-  -webkit-text-rendering: optimizeLegibility;
-  -moz-text-rendering: optimizeLegibility;
-  text-rendering: optimizeLegibility;
 }
+
+.navbar {
+  display: table;
+  width: 100%;
+  margin: 130px auto 10px auto;
+  padding: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .3),
+              0 3px 5px rgba(0, 0, 0, .2),
+              0 5px 10px rgba(0, 0, 0, .2),
+              0 20px 20px rgba(0, 0, 0, .15);
+}
+
+.navbar li {
+  display: table-cell;
+}
+
+.navbar li a {
+  position: relative;
+  display: block;
+  text-align: center;
+  color: rgba(0, 0, 0, .7);
+  text-decoration: none;
+  padding: 8px 8px 8px 8px;
+  transition: all .3s .1s;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, .4);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, .7) inset,
+              0 -1px 0 hsl(210, 100%, 32%) inset,
+              0 -2px 0 hsl(210, 100%, 38%) inset,
+              0 -3px 0 hsl(210, 100%, 44%) inset,
+              0 -4px 0 hsl(210, 100%, 50%) inset,
+              0 -5px 0 hsl(210, 100%, 60%) inset;
+}
+
+.navbar li a:hover,
+.navbar li a:focus {
+  background: rgba(255,255,255,.2);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, .7) inset,
+              0 -1px 0 hsl(210, 100%, 42%) inset,
+              0 -2px 0 hsl(210, 100%, 48%) inset,
+              0 -3px 0 hsl(210, 100%, 54%) inset,
+              0 -4px 0 hsl(210, 100%, 60%) inset,
+              0 -5px 0 hsl(210, 100%, 70%) inset;
+  padding: 8px 25px 8px 25px;
+  transition: all .3s 0s;
+
+}
+
+.navbar li a:active {
+  background: linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.1));
+  box-shadow: 0 0 2px rgba(0,0,0,.3) inset;
+}
+
 
 .new-todo,
 .edit {
@@ -106,6 +154,7 @@ input[type="checkbox"] {
 }
 
 .new-todo {
+  width: 50%;
   padding: 16px 16px 16px 60px;
   border: none;
   background: rgba(0, 0, 0, 0.003);
@@ -197,13 +246,24 @@ label[for='toggle-all'] {
   content: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" stroke="lightgray" stroke-width="3" fill="transparent" /><path fill="lightgray" d="M72 25L42 71 27 56l-4 4 20 20 34-52z"/></svg>');
 }
 
+.todo-list li .date {
+  float: right;
+  font-size: 0.8em;
+  padding: 1% 10% 0 0;
+  margin-left: inherit;
+  font-style: italic;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.todo-list li .view-expired {
+  background-color: rgba(170, 60, 70, 0.5);
+}
+
 .todo-list li label {
   white-space: pre-line;
   word-break: break-all;
-  padding: 15px 60px 15px 15px;
   margin-left: 45px;
-  display: block;
-  line-height: 1.2;
+  line-height: 2;
   transition: color 0.4s;
 }
 
@@ -220,6 +280,7 @@ label[for='toggle-all'] {
   bottom: 0;
   width: 40px;
   height: 40px;
+  line-height: 2;
   margin: auto 0;
   font-size: 30px;
   color: #cc9a9a;

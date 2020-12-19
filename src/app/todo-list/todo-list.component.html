@@ -1,14 +1,19 @@
 <section class="todoapp">
   <header class="header">
     <h1>{{label}}</h1>
-    <form (submit)="appendItem(newTodoInput.value); newTodoInput.value=''">
-      <input  #newTodoInput
-              name        = "newTodoInput"
+    <form (submit)="appendItem(newTextInput.value, newDateInput.value); newTextInput.value=''; newDateInput.value=''">
+      <input  #newTextInput
+              name        = "newTextInput"
               class       = "new-todo"
               placeholder = "Que faire?"
               autofocus />
+      <input  #newDateInput
+              type        = "date"
+              name        = "newDateInput"
+              class       = "new-todo" />
     </form>
   </header>
+
   <section class="main">
     <input  *ngIf   = "todoList.items.length != 0"
             class   = "toggle-all"
