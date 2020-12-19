@@ -11,24 +11,43 @@ import {TodoItemData} from './dataTypes/TodoItemData';
 })
 export class AppComponent implements OnInit{
 
-    constructor(private todoService: TodoService) {
-      console.log("todoapp");
+    private editingTab: boolean;
+    private pos: number;
 
-    }
+    constructor(private todoService: TodoService) {}
 
     ngOnInit() {
-      console.log("init");
-      //this.todoService.setListLabel("test");
+      this.pos = 1;
+      this.editingTab = false;
     }
 
     changeTodoList(label: string){
-      console.log(label);
-      this.todoService.setListLabel(label);
+      if (localStorage.getItem(label) !== null) {
+        this.todoService.setList(label, JSON.parse(localStorage.getItem(label)));
+      }
+      else {
+        this.todoService.setList(label, []);
+      }
     }
 
-    /*newList() {
-      var newTab = document.createElement("li");
-      var newTabContent = document.createElementElement("a");
-      *
-    }*/
+    newTab() {
+      this.editingTab = true;
+    }
+
+    addTab(label: string) {
+      var tabList = document.getElementsByClassName('navbar');
+
+      var newTab = document.createElement('li');
+      var tabContent = document.createElement('a');
+      var tabText = document.createTextNode(label);
+      tabContent.appendChild(tabText);
+      newTab.appendChild(tabContent);
+
+      tabList[0].insertBefore(newTab, tabList[0].childNodes[this.pos]);
+      this.pos++;
+      this.editingTab = false;
+      console.log(tabList[0]);
+
+      //this.todoService.setList(label, []);
+    }
 }

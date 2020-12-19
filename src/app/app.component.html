@@ -1,7 +1,15 @@
 <ul class="navbar">
-    <li><a #test1 (click)="changeTodoList(test1.textContent)">TodoList1</a></li>
-    <li><a href="#2">TodoList2</a></li>
-    <li id="newTab"><a (click)="newList()">New +</a></li>
+    <li><a #test1 (click)="changeTodoList(test1.textContent)">TodoList</a></li>
+    <li *ngIf="editingTab">
+      <form (submit)="addTab(newTab.value); newTab.value=''">
+        <input  #newTab
+                name        = "newTab"
+                class       = "new-tab"
+                placeholder = "Thème?"
+                autofocus />
+      </form>
+    </li>
+    <li id="newTab"><a (click)="newTab()">New +</a></li>
 </ul>
 
 

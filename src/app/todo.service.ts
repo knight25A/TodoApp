@@ -14,9 +14,9 @@ export class TodoService {
     return this.todoListSubject.asObservable();
   }
 
-  setListLabel(label: string) {
+  setList(label: string, items: TodoItemData[]) {
     this.todoListSubject.getValue().label = label;
-
+    this.todoListSubject.getValue().items = items;
   }
 
   setItemsLabel(label: string, ...items: TodoItemData[] ) {
