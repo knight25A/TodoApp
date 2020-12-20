@@ -14,10 +14,12 @@ export class TodoService {
     return this.todoListSubject.asObservable();
   }
 
+  // - retourne la todoList
   getTodoListData(): TodoListData {
     return this.todoListSubject.getValue();
   }
 
+  // - change les valeurs de la todoList
   setList(label: string, items: TodoItemData[]) {
     this.todoListSubject.getValue().label = label;
     this.todoListSubject.getValue().items = items;

@@ -9,14 +9,17 @@ import { TodoItemData } from "../dataTypes/TodoItemData";
   styleUrls: ['./todo-item.component.css']
 })
 export class TodoItemComponent implements OnInit {
-  @Input() private data: TodoItemData;
-  private editing: boolean;
-  private expired: boolean;
+  @Input() private data: TodoItemData;  // récupère l'item envoyé depuis le component père
+
+  private editing: boolean; // boolean pour savoir quand l'édition d'un item est en cours
+  private expired: boolean; // boolean pour savoir si la date d'un item est expirée
 
   constructor(private todoService: TodoService) {}
 
+  // - initialise les variables de la classe
   ngOnInit() {
     this.editing = false;
+
     if (this.data.dateLimit) {
       if (new Date() > new Date(this.data.dateLimit)) {
         this.expired = true;
@@ -25,13 +28,14 @@ export class TodoItemComponent implements OnInit {
         this.expired = false;
       }
     }
-
   }
 
+  // - retourne le nom de l'item
   get label(): string {
     return this.data.label;
   }
 
+  // - retourne le date de l'item lorsqu'il y en a une
   get dateLimit(): string {
     if (this.data.dateLimit != null) {
       var d = new Date(this.data.dateLimit);
@@ -41,16 +45,18 @@ export class TodoItemComponent implements OnInit {
 
   }
 
+  // - permet l'édition de l'item
   itemEdition() {
     this.editing = true;
   }
 
-
+  // - met à jour la valeur isDone de l'item
   itemDone(done:boolean) {
     this.todoService.setItemsDone(done, this.data);
 
   }
 
+  // - met à jour le label de l'item
   itemLabel(label: string) {
     if (label) {
       this.todoService.setItemsLabel(label, this.data);
@@ -60,6 +66,7 @@ export class TodoItemComponent implements OnInit {
     }
   }
 
+  // - supprime l'item
   removeItem() {
     this.todoService.removeItems(this.data);
   }
