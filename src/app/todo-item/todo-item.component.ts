@@ -17,14 +17,15 @@ export class TodoItemComponent implements OnInit {
 
   ngOnInit() {
     this.editing = false;
-    if (new Date(this.data.dateLimit) < new Date()) {
-      console.log("expired");
+    if (this.data.dateLimit) {
+      if (new Date() > new Date(this.data.dateLimit)) {
+        this.expired = true;
+      }
+      else {
+        this.expired = false;
+      }
+    }
 
-      this.expired = true;
-    }
-    else {
-      this.expired = false;
-    }
   }
 
   get label(): string {
@@ -32,8 +33,12 @@ export class TodoItemComponent implements OnInit {
   }
 
   get dateLimit(): string {
-    var d = new Date(this.data.dateLimit);
-    return d.getDate()+"/"+(d.getMonth()+1)+"/"+d.getFullYear();
+    if (this.data.dateLimit != null) {
+      var d = new Date(this.data.dateLimit);
+      return d.getDate()+"/"+(d.getMonth()+1)+"/"+d.getFullYear();
+    }
+    return null;
+
   }
 
   itemEdition() {

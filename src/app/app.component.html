@@ -1,5 +1,8 @@
 <ul class="navbar">
-    <li><a #test1 (click)="changeTodoList(test1.textContent)">TodoList</a></li>
+    <li *ngFor="let tab of tabs; index as i" class="todo-tab">
+      <app-todo-tab [name]="label(i)"></app-todo-tab>
+      <button class="delete" (click)="removeTab(i)"></button>
+    </li>
     <li *ngIf="editingTab">
       <form (submit)="addTab(newTab.value); newTab.value=''">
         <input  #newTab
@@ -9,8 +12,12 @@
                 autofocus />
       </form>
     </li>
-    <li id="newTab"><a (click)="newTab()">New +</a></li>
+    <li id="newTab"><a (click)="newTab()">Ajouter +</a></li>
 </ul>
 
 
-<app-todo-list></app-todo-list>
+<app-todo-list *ngIf="tabs.length !=0; else noTab"></app-todo-list>
+
+<ng-template #noTab>
+  <p>Commencer ajouter un thème pour créer votre "todolist"</p>
+</ng-template>

@@ -6,7 +6,7 @@
           (ngModelChange) = "itemDone($event)"
   />
   <label	(dblclick)="itemEdition()">{{label}}</label>
-  <label  class="date">{{dateLimit}}</label>
+  <label *ngIf="dateLimit != null"  class="date">{{dateLimit}}</label>
   <button class="destroy" (click)="removeItem()"></button>
 </div>
 <ng-template #edition>

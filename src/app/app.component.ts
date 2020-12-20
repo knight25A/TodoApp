@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {TodoService} from './todo.service';
 import {TodoListData} from './dataTypes/TodoListData';
 import {TodoItemData} from './dataTypes/TodoItemData';
+import { TodoTabComponent } from "./todo-tab/todo-tab.component";
 
 @Component({
   selector: 'app-root',
@@ -11,23 +12,35 @@ import {TodoItemData} from './dataTypes/TodoItemData';
 })
 export class AppComponent implements OnInit{
 
+    private tabList: string[];
     private editingTab: boolean;
-    private pos: number;
 
-    constructor(private todoService: TodoService) {}
+    constructor(private todoService: TodoService) {
+      if (localStorage.getItem("tabs") !== null) {
+        this.tabList = JSON.parse(localStorage.getItem("tabs"));
+      }
+      else {
+        this.tabList = [this.todoService.getTodoListData().label];
+      }
+
+      if (localStorage.getItem(this.tabList[0]) !== null) {
+        this.todoService.setList(this.tabList[0], JSON.parse(localStorage.getItem(this.tabList[0])));
+      }
+      else {
+        this.todoService.setList(this.tabList[0], []);
+      }
+    }
 
     ngOnInit() {
-      this.pos = 1;
       this.editingTab = false;
     }
 
-    changeTodoList(label: string){
-      if (localStorage.getItem(label) !== null) {
-        this.todoService.setList(label, JSON.parse(localStorage.getItem(label)));
-      }
-      else {
-        this.todoService.setList(label, []);
-      }
+    label(i): string {
+      return this.tabList[i];
+    }
+
+    get tabs(): string[] {
+      return this.tabList;
     }
 
     newTab() {
@@ -35,19 +48,22 @@ export class AppComponent implements OnInit{
     }
 
     addTab(label: string) {
-      var tabList = document.getElementsByClassName('navbar');
+      this.editingTab = false
+      this.tabList.push(label);
+      if (localStorage.getItem(label) !== null) {
+        this.todoService.setList(label, JSON.parse(localStorage.getItem(label)));
+      }
+      else {
+        this.todoService.setList(label, []);
+      }
 
-      var newTab = document.createElement('li');
-      var tabContent = document.createElement('a');
-      var tabText = document.createTextNode(label);
-      tabContent.appendChild(tabText);
-      newTab.appendChild(tabContent);
+      localStorage.setItem("tabs", JSON.stringify(this.tabList));
+    }
 
-      tabList[0].insertBefore(newTab, tabList[0].childNodes[this.pos]);
-      this.pos++;
-      this.editingTab = false;
-      console.log(tabList[0]);
-
-      //this.todoService.setList(label, []);
+    removeTab(i) {
+      localStorage.removeItem(this.tabList[i]);
+      this.tabList.splice(i,1);
+      console.log(this.tabList);
+      localStorage.setItem("tabs", JSON.stringify(this.tabList));
     }
 }

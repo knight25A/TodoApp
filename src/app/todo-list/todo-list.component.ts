@@ -15,18 +15,13 @@ export class TodoListComponent implements OnInit {
     private allCompleted: boolean;
 
     constructor(private todoService: TodoService) {
-        console.log("construct");
-
         todoService.getTodoListDataObservable().subscribe(tdl => this.todoList = tdl);
     }
 
     ngOnInit() {
-      console.log(this.todoList.label);
-
       if (localStorage.getItem(this.todoList.label) !== null) {
         this.todoList.items = JSON.parse(localStorage.getItem(this.todoList.label));
       }
-
       this.filter = 'all';
       this.allCompleted = false;
     }
@@ -87,7 +82,6 @@ export class TodoListComponent implements OnInit {
           isDone:false
         });
       }
-
     }
 
     clearCompleted() {

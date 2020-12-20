@@ -14,6 +14,10 @@ export class TodoService {
     return this.todoListSubject.asObservable();
   }
 
+  getTodoListData(): TodoListData {
+    return this.todoListSubject.getValue();
+  }
+
   setList(label: string, items: TodoItemData[]) {
     this.todoListSubject.getValue().label = label;
     this.todoListSubject.getValue().items = items;
@@ -46,6 +50,8 @@ export class TodoService {
     localStorage.setItem(this.todoListSubject.getValue().label, JSON.stringify(this.todoListSubject.getValue().items));
   }
   appendItems( ...items: TodoItemData[] ) {
+    console.log(items);
+
     const tdl = this.todoListSubject.getValue();
     this.todoListSubject.next( {
       label: tdl.label, // ou on peut écrire: ...tdl,

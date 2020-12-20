@@ -22,7 +22,7 @@
             (click) = "completedAll()"
     />
     <ul class="todo-list">
-      <li *ngFor="let item of filterItems()">
+      <li *ngFor="let item of filterItems()" [ngClass]="{'completed': item.isDone}">
         <app-todo-item [data]="item"></app-todo-item>
       </li>
     </ul>
@@ -31,13 +31,13 @@
     <span class="todo-count"><strong>{{nbUncheckedItems}}</strong> restantes </span>
     <ul class="filters">
       <li>
-        <a class="filterAll" (click)="filter = 'all'">Tous</a>
+        <a [ngClass]="{'selected': filter === 'all'}" (click)="filter = 'all'">Tous</a>
       </li>
       <li>
-        <a class="filterActives" (click)="filter = 'actives'">Actifs</a>
+        <a [ngClass]="{'selected': filter === 'actives'}" (click)="filter = 'actives'">Actifs</a>
       </li>
       <li>
-        <a class="filterCompleted" (click)="filter = 'completed'">Complétés</a>
+        <a [ngClass]="{'selected': filter === 'completed'}" (click)="filter = 'completed'">Complétés</a>
       </li>
     </ul>
     <button *ngIf="todoList.items.length != 0" class="clear" (click)="clearAll()">Reset</button>
